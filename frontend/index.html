@@ -3,9 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="./frontend/css/style.css">
+    <title>Lab 5</title>
 </head>
 <body>
-    
+    <h2>Insert Rows</h2>
+    <button onclick="insertRows()">Insert Rows</button>
+    <div id="insertResponse"></div>
+
+    <h2>Execute SQL Query</h2>
+    <textarea id="sqlQuery" rows="4" cols="50"></textarea><br>
+    <button onclick="executeQuery()">Submit Query</button>
+    <div id="queryResponse"></div>
+
+    <script src="scripts/scripts.js" type="module" ></script>
 </body>
 </html>
