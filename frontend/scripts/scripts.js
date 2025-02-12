@@ -1,3 +1,9 @@
+import {messages} from '../locals/en.js';
+
+document.getElementById('insertRowTitle').innerText = messages.insertRowsText;
+document.getElementById('insertRowButton').innerText = messages.insertRowsText;
+document.getElementById('executeQueryTitle').innerText = messages.executeSQLQueryText;
+document.getElementById('executeQueryButton').innerText = messages.submitQueryText;
 
 const insertRows = () => {
     const rows = [

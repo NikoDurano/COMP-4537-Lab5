@@ -7,13 +7,13 @@
     <title>Lab 5</title>
 </head>
 <body>
-    <h2>Insert Rows</h2>
-    <button onclick="insertRows()">Insert Rows</button>
+    <h2 id="insertRowTitle"></h2>
+    <button onclick="insertRows()" id="insertRowButton"></button>
     <div id="insertResponse"></div>
 
-    <h2>Execute SQL Query</h2>
+    <h2 id="executeQueryTitle"></h2>
     <textarea id="sqlQuery" rows="4" cols="50"></textarea><br>
-    <button onclick="executeQuery()">Submit Query</button>
+    <button onclick="executeQuery()" id="executeQueryButton"></button>
     <div id="queryResponse"></div>
 
     <script src="scripts/scripts.js" type="module" ></script>
