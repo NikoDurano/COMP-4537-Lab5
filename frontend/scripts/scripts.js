@@ -16,7 +16,7 @@ const insertRows = () => {
     rows.forEach(row => {
 
         // TODO Change as needed
-        fetch('/insert', {
+        fetch('http://localhost:8080/insert', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -39,7 +39,7 @@ const executeQuery = () => {
     const query = document.getElementById('sqlQuery').value.trim();
 
     // TODO Change as needed
-    let url = '/query';
+    let url = 'http://localhost:8080/query';
     let method = 'POST'
 
     if(query.startsWith('SELECT')) {
