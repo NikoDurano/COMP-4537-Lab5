@@ -14,7 +14,6 @@ const insertRows = () => {
     ];
 
     rows.forEach(row => {
-
         // TODO Change as needed
         fetch('http://localhost:8080/insert', {
             method: 'POST',
@@ -40,27 +39,35 @@ const executeQuery = () => {
 
     // TODO Change as needed
     let url = 'http://localhost:8080/query';
-    let method = 'POST'
-
-    if(query.startsWith('SELECT')) {
-        method = 'GET';
-        url +=`?query=${query}`;
-    }
-
-    fetch(url, {
+    let method = 'POST';
+    let options = {
         method: method,
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            query: query
+        body: JSON.stringify({ query: query })
+    };
+
+    if (query.toUpperCase().startsWith('SELECT')) {
+        // Use GET for SELECT queries
+        method = 'GET';
+        url += `?query=${encodeURIComponent(query)}`;
+        
+        // GET requests CANNOT have a body, so remove it
+        options = {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+    }
+
+    fetch(url, options)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('queryResponse').innerText = JSON.stringify(data, null, 2);
         })
-    })
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById('queryResponse').innerText = JSON.stringify(data, null, 2);
-    })
-    .catch(error => console.error('Error:', error));
+        .catch(error => console.error('Error:', error));
 
 }
 window.executeQuery = executeQuery;

@@ -1,6 +1,9 @@
+
 const http = require('http');
 const mysql = require('mysql');
 const url = require('url');
+const messages = require ('./locals/en.js');
+
 
 const db = mysql.createConnection({
     host: 'localhost',
@@ -16,6 +19,22 @@ db.connect(err => {
         process.exit(1);
     }
     console.log('Connected to MySQL database.');
+
+    const createTableSQL = `
+        CREATE TABLE IF NOT EXISTS patient (
+            patientid INT(11) AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(100),
+            dateOfBirth DATE
+        );
+    `;
+    
+    db.query(createTableSQL, (err, result) => {
+        if (err) {
+            console.error('Error creating table:', err);
+        } else {
+            console.log('Table ensured: patient');
+        }
+    });
 });
 
 const server = http.createServer((req, res) => {
@@ -45,11 +64,11 @@ const server = http.createServer((req, res) => {
             db.query(sql, [data.name, data.birthdate], (err, result) => {
                 if (err) {
                     res.writeHead(500, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify({ error: 'Database error', details: err }));
+                    res.end(JSON.stringify({ error: messages.databaseErrorText , details: err }));
                     return;
                 }
                 res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ message: 'Row inserted successfully', id: result.insertId }));
+                res.end(JSON.stringify({ message: messages.rowInsertedText, id: result.insertId }));
             });
         });
 
@@ -59,14 +78,14 @@ const server = http.createServer((req, res) => {
 
             if (!sqlQuery.startsWith('SELECT')) {
                 res.writeHead(400, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ error: 'Only SELECT queries are allowed via GET' }));
+                res.end(JSON.stringify({ error: messages.onlySelectQueriesAllowedText }));
                 return;
             }
 
             db.query(sqlQuery, (err, results) => {
                 if (err) {
                     res.writeHead(500, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify({ error: 'Database error', details: err }));
+                    res.end(JSON.stringify({ error: messages.databaseErrorText, details: err }));
                     return;
                 }
                 res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -85,24 +104,24 @@ const server = http.createServer((req, res) => {
 
                 if (!query.startsWith('INSERT')) {
                     res.writeHead(400, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify({ error: 'Only INSERT queries are allowed via POST' }));
+                    res.end(JSON.stringify({ error: messages.onlyInsertQueriesAllowedText }));
                     return;
                 }
 
                 db.query(query, (err, result) => {
                     if (err) {
                         res.writeHead(500, { 'Content-Type': 'application/json' });
-                        res.end(JSON.stringify({ error: 'Database error', details: err }));
+                        res.end(JSON.stringify({ error: messages.databaseErrorText, details: err }));
                         return;
                     }
                     res.writeHead(200, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify({ message: 'Query executed successfully', affectedRows: result.affectedRows }));
+                    res.end(JSON.stringify({ message: messages.queryExecutedText, affectedRows: result.affectedRows }));
                 });
             });
         }
     } else {
         res.writeHead(404, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: 'Not Found' }));
+        res.end(JSON.stringify({ error: messages.notFoundText }));
     }
 });
 
