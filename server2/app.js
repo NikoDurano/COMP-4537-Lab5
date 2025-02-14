@@ -127,5 +127,5 @@ const server = http.createServer((req, res) => {
 
 // Start the server
 server.listen(8080, () => {
-    console.log('Server running on http://localhost:8080');
+    console.log('Server running on port:8080');
 });

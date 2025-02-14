@@ -1,0 +1,13 @@
+{
+    "name": "comp-4537-lab4",
+    "version": "1.0.0",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "engines": {
+        "node": "20.15.1"
+    },
+    "dependencies": {
+        "mysql": "^2.18.1"
+    }
+}
