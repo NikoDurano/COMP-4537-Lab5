@@ -5,6 +5,8 @@ document.getElementById('insertRowButton').innerText = messages.insertRowsText;
 document.getElementById('executeQueryTitle').innerText = messages.executeSQLQueryText;
 document.getElementById('executeQueryButton').innerText = messages.submitQueryText;
 
+const backendURL = 'http://159.223.100.108:8080/';
+
 const insertRows = () => {
     const rows = [
         ['Sara Brown', '1901-01-01'],
@@ -14,8 +16,7 @@ const insertRows = () => {
     ];
 
     rows.forEach(row => {
-        // TODO Change as needed
-        fetch('http://localhost:8080/insert', {
+        fetch(`${backendURL}/insert`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -37,8 +38,7 @@ window.insertRows = insertRows;
 const executeQuery = () => {
     const query = document.getElementById('sqlQuery').value.trim();
 
-    // TODO Change as needed
-    let url = 'http://localhost:8080/query';
+    let url = `${backendURL}/query`;
     let method = 'POST';
     let options = {
         method: method,
