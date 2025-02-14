@@ -7,8 +7,8 @@ const messages = require ('./locals/en.js');
 
 const db = mysql.createConnection({
     host: 'localhost',
-    user: 'root',  
-    password: '',   
+    user: 'u1',  
+    password: 'u1pass',   
     database: 'lab5' 
 });
 
